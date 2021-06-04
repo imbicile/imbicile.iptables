@@ -80,7 +80,7 @@ Result -- cat /etc/iptables/rules.v4
     # ACCEPT
     -A INPUT -s 192.168.1.0/24 -i enp0s1 -j ACCEPT
     -A INPUT -s 192.168.2.0/24 -i enp0s1 -j ACCEPT
-    -A INPUT -s 192.168.13.0/24 -i enp0s3 -j ACCEPT
+    -A INPUT -s 192.168.3.0/24 -i enp0s3 -j ACCEPT
     -A INPUT -s 192.168.4.22/32 -i enp0s3 -j ACCEPT
 
     # DROP
@@ -102,7 +102,7 @@ Result -- cat /etc/iptables/rules.v4
     -A POSTROUTING -s 192.168.30.0/24 -o enp0s3 -j MASQUERADE
     -A POSTROUTING -s 192.168.31.0/24 -o enp0s3 -j MASQUERADE
     -A POSTROUTING -s 192.168.32.0/24 -o enp0s3 -j MASQUERADE
-    -A POSTROUTING -s 192.168.14.22/32 -o enp0s3 -j MASQUERADE
+    -A POSTROUTING -s 192.168.4.22/32 -o enp0s3 -j MASQUERADE
     COMMIT
 
 
