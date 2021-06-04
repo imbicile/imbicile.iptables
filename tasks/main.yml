@@ -1,0 +1,26 @@
+---
+# tasks file for roles/imbicile.iptables
+
+- name: set net.ipv4.ip_forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: install iptables
+  apt:
+    pkg:
+      - iptables
+      - iptables-persistent
+      - netfilter-persistent
+    update_cache: yes
+    state: latest
+
+- name: config iptables
+  template:
+    src: rules.v4.j2
+    dest: /etc/iptables/rules.v4
+    mode: "0644"
+  notify: restart netfilter
