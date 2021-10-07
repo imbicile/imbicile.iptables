@@ -8,9 +8,10 @@
 ### INPUT
 
 # Default
+-A INPUT -i lo -m comment --comment "Accept lo interface" -j ACCEPT
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -m comment --comment "related and established connections" -j ACCEPT
 -A INPUT -p icmp -m comment --comment "Allow Ping" -j ACCEPT
 -A INPUT -p tcp -m tcp --dport 22 -m comment --comment "Allow SSH" -j ACCEPT
--A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -m comment --comment "related and established connections" -j ACCEPT
 
 {% if iptables_input is defined %}
 # ACCEPT
