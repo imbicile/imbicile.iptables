@@ -1,27 +1,26 @@
-Role Name
-=========
+# Role Name
 
 Simple iptables
 
-Requirements
-------------
+## Requirements
 
 Debian based distro
 
-Role Variables
---------------
+## Role Variables
 
-    - iptables_input:
-        interface:
-          net:
+```yaml
+- iptables_input:
+    interface:
+      net:
 
-    - iptables_nat:
-        interface:
-          net:
+- iptables_nat:
+    interface:
+      net:
+```
 
-Example Playbook
-----------------
+## Example Playbook
 
+```yaml
     ---
     - hosts:
         - all
@@ -56,11 +55,11 @@ Example Playbook
       roles:
         - role: imbicile.iptables
           tags: iptables
+```
 
+## Result -- cat /etc/iptables/rules.v4
 
-Result -- cat /etc/iptables/rules.v4 
-----------------
-
+```yaml
     #
     # Ansible managed
     #
@@ -104,14 +103,12 @@ Result -- cat /etc/iptables/rules.v4
     -A POSTROUTING -s 192.168.32.0/24 -o enp0s3 -j MASQUERADE
     -A POSTROUTING -s 192.168.4.22/32 -o enp0s3 -j MASQUERADE
     COMMIT
+```
 
-
-License
--------
+## License
 
 BSD
 
-Author Information
-------------------
+## Author Information
 
 https://imbicile.pp.ru/

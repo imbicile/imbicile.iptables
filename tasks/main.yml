@@ -1,14 +1,6 @@
 ---
 # tasks file for roles/imbicile.iptables
 
-- name: set net.ipv4.ip_forward
-  sysctl:
-    name: net.ipv4.ip_forward
-    value: "1"
-    sysctl_set: yes
-    state: present
-    reload: yes
-
 - name: install iptables
   apt:
     pkg:
@@ -18,9 +10,36 @@
     update_cache: yes
     state: latest
 
+- name: set net.ipv4.ip_forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: "1"
+    sysctl_set: yes
+    state: present
+    reload: yes
+
 - name: config iptables
   template:
     src: rules.v4.j2
     dest: /etc/iptables/rules.v4
     mode: "0644"
   notify: restart netfilter
+
+- name: force restart netfilter
+  meta: flush_handlers
+
+- name: set net.nf_conntrack_max
+  sysctl:
+    name: net.nf_conntrack_max
+    value: "1048576"
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+- name: set net.netfilter.nf_conntrack_max
+  sysctl:
+    name: net.netfilter.nf_conntrack_max
+    value: "1048576"
+    sysctl_set: yes
+    state: present
+    reload: yes
