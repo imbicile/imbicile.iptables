@@ -23,6 +23,18 @@
 
 # DROP
 -A INPUT -m comment --comment "Drop all input" -j DROP
+
+### FORWARD
+-A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -m comment --comment "Related and established connections" -j ACCEPT
+
+{% if iptables_input is defined %}
+# ACCEPT
+{% for interfece in iptables_input recursive%}
+{% for network in iptables_input[interfece].net recursive%}
+-A FORWARD -s {{ network }} -o {{ interfece }} -j ACCEPT
+{% endfor %}{% endfor %}{% endif %}
+
+# DROP
 -A FORWARD -m comment --comment "Drop all forward" -j DROP
 COMMIT
 
