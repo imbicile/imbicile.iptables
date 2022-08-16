@@ -20,22 +20,21 @@
 {% for network in iptables_input[interfece].net recursive%}
 -A INPUT -s {{ network }} -i {{ interfece }} -j ACCEPT
 {% endfor %}{% endfor %}{% endif %}
-
 # DROP
 -A INPUT -m comment --comment "Drop all input" -j DROP
 
 ### FORWARD
 -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -m comment --comment "Related and established connections" -j ACCEPT
 
-{% if iptables_input is defined %}
+{% if iptables_nat is defined %}
 # ACCEPT
-{% for interfece in iptables_input recursive%}
-{% for network in iptables_input[interfece].net recursive%}
+{% for interfece in iptables_nat recursive%}
+{% for network in iptables_nat[interfece].net recursive%}
 -A FORWARD -s {{ network }} -o {{ interfece }} -j ACCEPT
 {% endfor %}{% endfor %}{% endif %}
-
 # DROP
 -A FORWARD -m comment --comment "Drop all forward" -j DROP
+
 COMMIT
 
 ### NAT
